@@ -1,15 +1,17 @@
-<%= form_for(@user) do |f| %>
-  <% if @user.errors.any? %>
+<%= form_for(@location) do |f| %>
+  <% if @location.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+      <h2><%= pluralize(@location.errors.count, "error") %> prohibited this location from being saved:</h2>
 
       <ul>
-      <% @user.errors.full_messages.each do |message| %>
+      <% @location.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
     </div>
   <% end %>
+
+
 
   <div class="field">
     <%= f.label :latitude %><br>
@@ -31,7 +33,19 @@
     <%= f.label :title %><br>
     <%= f.text_field :title %>
   </div>
+
+<div class="field">
+      <%= f.label :user, "Users" %> <br>
+      <%= collection_check_boxes(:location, :user_ids, User.all, :id, :first_name) %>
+</div>
+
+
   <div class="actions">
     <%= f.submit %>
   </div>
 <% end %>
+
+  <% @users.each do |user| %>
+  <p><%= user.email %></p>
+<% end %>
+

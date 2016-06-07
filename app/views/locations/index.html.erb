@@ -4,7 +4,7 @@
 
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Users</h1>
+<h1>Listing locations</h1>
 
 <table>
   <thead>
@@ -19,16 +19,16 @@
   </thead>
 
   <tbody>
-    <% @users.each do |user| %>
+    <% @locations.each do |location| %>
       <tr>
-        <td><%= user.latitude %></td>
-        <td><%= user.longitude %></td>
-        <td><%= user.address %></td>
-        <td><%= user.description %></td>
-        <td><%= user.title %></td>
-        <td><%= link_to 'Show', user %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
-        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= location.latitude %></td>
+        <td><%= location.longitude %></td>
+        <td><%= location.address %></td>
+        <td><%= location.description %></td>
+        <td><%= location.title %></td>
+        <td><%= link_to 'Show', location %></td>
+        <td><%= link_to 'Edit', edit_location_path(location) %></td>
+        <td><%= link_to 'Destroy', location, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -36,7 +36,7 @@
 
 <br>
 
-<%= link_to 'New User', new_user_path %>
+<%= link_to 'New location', new_location_path %>
 
 <div style='width: 800px;'>
   <div id="map" style='width: 800px; height: 400px;'></div>
