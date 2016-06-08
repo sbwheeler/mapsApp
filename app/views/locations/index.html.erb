@@ -20,32 +20,35 @@ $(document).ready(function(){
     markers = handler.addMarkers(<%=raw @hash.to_json %>);
     handler.bounds.extendWith(markers);
     handler.fitMapToBounds();
-    Gmaps.map.hideMarker(marker)
+
+    // Gmaps.map.hideMarker(markers)
 
     // google.maps.event.addListener(handler.getMap(), 'click', yourFunction)
     // this can be used to add locations via dropping a pin
   });
+  // Gmaps.map.callback = function() {
+  //     var markers = Gmaps.map.markers
+  //     Gmaps.map.markers[0].serviceObject.setVisible(false)
+  //   }
 });
 </script>
 
 
 
-<!-- <script type="text/javascript">
-  $(document).ready(function() {
-    Gmaps.map.callback = function() {
-      _.each(Gmaps.map.markers, function(marker) {
-        Gmaps.map.hideMarker(marker)
-      })
-    }
+<h1 id="list" style="margin-left:10%">Show Location List</h1>
+
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function() {
+  $("#list1").hide();
+  $("#list").click(function(){
+    $("#list1").fadeIn(3000);
   });
- -->
+});
+</script>
 
-<p style="font-size: 20px; margin-left:10%; margin-top: 3%"><%= link_to 'Add New location', new_location_path %></p>
+<div id="list1">
 
-
-<h1 style="margin-left: 60px;">List of Locations</h1>
-
-<table style="margin-left: 60px;">
+<table style="margin-left:10%;">
   <thead>
     <tr>
       <th>Location</th>
@@ -62,5 +65,5 @@ $(document).ready(function(){
     <% end %>
   </tbody>
 </table>
+</div>
 
-<br>
