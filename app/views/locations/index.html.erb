@@ -4,52 +4,63 @@
 
 <p id="notice"><%= notice %></p>
 
-<h1>Listing locations</h1>
 
-<table>
+
+
+
+<div style='width: 1200px; margin-left: 10%;'>
+  <div id="map" style='width: 1000px; height: 500px;'></div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+  handler = Gmaps.build('Google');
+  handler.buildMap({ 
+    provider: {}, internal: {id: 'map'}}, function(){
+    markers = handler.addMarkers(<%=raw @hash.to_json %>);
+    handler.bounds.extendWith(markers);
+    handler.fitMapToBounds();
+    Gmaps.map.hideMarker(marker)
+
+    // google.maps.event.addListener(handler.getMap(), 'click', yourFunction)
+    // this can be used to add locations via dropping a pin
+  });
+});
+</script>
+
+
+
+<!-- <script type="text/javascript">
+  $(document).ready(function() {
+    Gmaps.map.callback = function() {
+      _.each(Gmaps.map.markers, function(marker) {
+        Gmaps.map.hideMarker(marker)
+      })
+    }
+  });
+ -->
+
+<p style="font-size: 20px; margin-left:10%; margin-top: 3%"><%= link_to 'Add New location', new_location_path %></p>
+
+
+<h1 style="margin-left: 60px;">List of Locations</h1>
+
+<table style="margin-left: 60px;">
   <thead>
     <tr>
-      <th>Latitude</th>
-      <th>Longitude</th>
+      <th>Location</th>
       <th>Address</th>
-      <th>Description</th>
-      <th>Title</th>
-      <th colspan="3"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @locations.each do |location| %>
       <tr>
-        <td><%= location.latitude %></td>
-        <td><%= location.longitude %></td>
+        <td><%= link_to location.title, location %></td>
         <td><%= location.address %></td>
-        <td><%= location.description %></td>
-        <td><%= location.title %></td>
-        <td><%= link_to 'Show', location %></td>
-        <td><%= link_to 'Edit', edit_location_path(location) %></td>
-        <td><%= link_to 'Destroy', location, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to 'New location', new_location_path %>
-
-<div style='width: 800px;'>
-  <div id="map" style='width: 800px; height: 400px;'></div>
-</div>
-
-<script type="text/javascript">
-  handler = Gmaps.build('Google');
-  handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
-    markers = handler.addMarkers(<%=raw @hash.to_json %>);
-    handler.bounds.extendWith(markers);
-    handler.fitMapToBounds();
-
-    // google.maps.event.addListener(handler.getMap(), 'click', yourFunction)
-    // this can be used to add locations via dropping a pin
-  });
-</script>

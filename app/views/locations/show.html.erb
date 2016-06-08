@@ -1,16 +1,6 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Latitude:</strong>
-  <%= @location.latitude %>
-</p>
-
-<p>
-  <strong>Longitude:</strong>
-  <%= @location.longitude %>
-</p>
-
-<p>
   <strong>Address:</strong>
   <%= @location.address %>
 </p>
@@ -25,5 +15,13 @@
   <%= @location.title %>
 </p>
 
+<p><strong>Users</strong></p>
+      <ul>
+        <% @location.users.each do |user| %>
+        <li><%= user.full_name %></li>
+        <% end %>
+      </ul>
+
 <%= link_to 'Edit', edit_location_path(@location) %> |
-<%= link_to 'Back', locations_path %>
+<%= link_to 'Delete', @location, method: :delete, data: { confirm: 'Are you sure?'} %> |
+<%= link_to 'Show all locations', locations_path %>

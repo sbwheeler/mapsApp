@@ -5,10 +5,22 @@ class LocationsController < ApplicationController
   # GET /locations.json
   def index
     @locations = Location.all
+    @users = User.all
+    
     @hash = Gmaps4rails.build_markers(@locations) do |location, marker|
       marker.lat location.latitude
       marker.lng location.longitude
-      marker.infowindow location.description
+      # marker.picture({
+      #                 :url => "https://cdn0.iconfinder.com/data/icons/user-icons-4/100/user-17-512.png",
+      #                 :width   => 32,
+      #                 :height  => 32
+      #                })
+      marker.title location.title
+      marker.json({:id => location.id })
+      marker.infowindow render_to_string(:partial => "/locations/my_template", :locals => { :object => location})
+      # marker.infowindow(ActionController::Base.helpers.link_to(location.id ||= 'Title?',preplan_path(location)).html_safe)
+      # marker.infowindow "<h5>#{location.title}</h4> <p>#{location.description}</p> <p> #{@users.find_by_id(location.user_ids).first_name} </p> <a href='/'{location.id}''>Show</a>"
+      # get this to show multiple names
     end
   end
 
@@ -35,7 +47,7 @@ class LocationsController < ApplicationController
 
     respond_to do |format|
       if @location.save
-        format.html { redirect_to @location, notice: 'location was successfully created.' }
+        format.html { redirect_to locations_path, notice: 'Location was successfully created.' }
         format.json { render :show, status: :created, location: @location }
       else
         format.html { render :new }
@@ -49,7 +61,7 @@ class LocationsController < ApplicationController
   def update
     respond_to do |format|
       if @location.update(location_params)
-        format.html { redirect_to @location, notice: 'location was successfully updated.' }
+        format.html { redirect_to locations_path, notice: 'Location was successfully updated.' }
         format.json { render :show, status: :ok, location: @location }
       else
         format.html { render :edit }

@@ -1,0 +1,10 @@
+<h5><%= object.title %></h5>
+<p><%= object.description %></p>
+<h6>Users:</h6>
+<ul>
+	<% object.user_ids.each do |user_id| %>
+		<li><%= User.find_by_id(user_id).first_name %></li>
+	<% end %>
+</ul>
+
+<%= link_to 'See Location Page', location_path(object) %>
